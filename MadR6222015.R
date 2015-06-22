@@ -581,7 +581,7 @@ RegModels<-HOF(AgeAreMatrix$Binary,AgeAreaMatrix$Circle)
 
 # Remind ourselves of what the data looks like
 head(AgeAreaMatrix)
-  		            LatRange	GridCount   Circle EarlyAge   AgeBin
+  	                LatRange    GridCount   Circle EarlyAge   AgeBin
 	Acanthotrophon      5.12            2   737.13        8  Neogene
 	Acorylus           12.21            3  1558.64       12  Neogene
 	Adamussium         34.38           17  7631.04       12  Neogene
