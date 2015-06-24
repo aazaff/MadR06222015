@@ -306,7 +306,7 @@ benchmark(
 
 # "Beware of arguments related to programming speed. 
 # All things being equal, faster is better. 
-# But all things are never equal." - Josh Tyrangiel
+# But all things are never equal." - Paul Ford
 
 ############################## Parallelizaton Caveats ##################################
 # There are lots of deprecated or otherwise out-of-date packages for parallelization
