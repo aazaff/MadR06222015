@@ -290,14 +290,14 @@ parallelRangeGenus<-function(Epoch=Pleistocene) {
 benchmark(
 	forRangeGenus(Epoch),
 	applyRangeGenus(Epoch),
-	assignRangeGenus2(Epoch),
+	assignRangeGenus(Epoch),
 	byRangeGenus(Epoch),
 	parallelRangeGenus(Epoch)
 	)
 	                       test replications elapsed relative
 	3    applyRangeGenus(Epoch)          100 537.487    1.974
 	4       byRangeGenus(Epoch)          100 533.517    1.960 # by is twice as long!
-	2  definedRangeGenus(Epoch)          100 580.627    2.133
+	2   assignRangeGenus(Epoch)          100 580.627    2.133
 	1      forRangeGenus(Epoch)          100 773.786    2.842
 	5 parallelRangeGenus(Epoch)          100 272.262    1.000
 
