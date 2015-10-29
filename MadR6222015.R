@@ -17,7 +17,6 @@ library(rbenchmark) # Benchmarking package
 # Shout-outs to the following packages/alternatives
 library(pbapply) # Package for adding progress bars to apply() family functions
 library(MASS) # Package capable of ordinal logistic regression
-library(plyr) # Package with optimized apply() family functions
 library(microbenchmark) # Alternative benchmarking package
 library(pscl) # Package for computing pseudo-R2 for logistic regressions
 
