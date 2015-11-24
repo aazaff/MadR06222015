@@ -98,9 +98,7 @@ parseCombine<-function(GenusSubset) {
 	# Collapse the latitude and longitude of a point into a single string
 	CollapsedCoords<-apply(GenusSubset[,c("paleolat","paleolng")],1,paste,collapse=",")
 	# Make every unique combinaton of coordinate pairs using combn()
-	CombinedCoords<-combn(CollapsedCoords,2)
-	# Rebind the output list into a dataframe
-	CombinedCoords<-do.call(rbind,CombinedCoords)
+	CombinedCoords<-t(combn(CollapsedCoords,2))
 	# Split the string of coordinates back into unique lat and long values
 	FirstCoordsSplit<-strsplit(CombinedCoords[,1],",")
 	FirstCoords<-do.call(rbind,FirstCoordsSplit)
