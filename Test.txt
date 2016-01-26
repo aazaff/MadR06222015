@@ -1,0 +1,2 @@
+This is a example text file. You could type out the answers to your lab assignments in a text file
+just like this one. This is only a test. Just a test. A harmless, totally safe, and very gentle test.
