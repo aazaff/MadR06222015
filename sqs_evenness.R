@@ -34,13 +34,17 @@ populateMatrix<-function(Species,Start=0.1,End=2,Increments=0.1) {
         return(ceiling(FinalMatrix*100)) # Use ceiling to ensure integer values
         }
 
+# Calculate the theil entropy which is a true measure of evenness
+# Unnecessarily slow because I took a lot of intermediate steps to make it clearer
 theilEntropy<-function(Abundances) {
         Richness<-length(Abundances)
-        Top<-Abundances/Richness
+        Total<-sum(Abundances)
+        Top<-Abundances/Total
         Bottom<-1/Richness
         Quotient<-Top/Bottom
         Exponent<-Quotient^Abundances
-        Solution<-log(Exponent^(1/Richness))
+        Product<-prod(Exponent)
+        Solution<-log(Product^(1/Total))
         return(Solution)
         }
 
