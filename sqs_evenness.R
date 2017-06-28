@@ -21,18 +21,28 @@ if (suppressWarnings(require("vegan"))==FALSE) {
 # Use the Jones, M. C. and Pewsey A. (2009). Sinh-arcsinh distributions. Biometrika 96: 761–780.
 # To generate a half-normal distribution with increasingly changing kurtoses
 sinArc<-function(Points,Epsilon=0,Delta=1) {
-    return(dnorm(sinh(Delta*asinh(Points)-Epsilon))*Delta*cosh(Delta*asinh(Points)-Epsilon)/sqrt(1+Points^2))
-    }
+        return(dnorm(sinh(Delta*asinh(Points)-Epsilon))*Delta*cosh(Delta*asinh(Points)-Epsilon)/sqrt(1+Points^2))
+        }
 
 # Generate a matrix of different "samples" with increasing un-evenness by row
 populateMatrix<-function(Species,Start=0.1,End=2,Increments=0.1) {
-    Deltas<-seq(Start,End,Increments)
-    FinalMatrix<-matrix(NA,nrow=length(Deltas),ncol=length(Species))
-    for (i in 1:length(Deltas)) {
-        FinalMatrix[i,]<-sinArc(Species,0,Deltas[i])
+        Deltas<-seq(Start,End,Increments)
+        FinalMatrix<-matrix(NA,nrow=length(Deltas),ncol=length(Species))
+        for (i in 1:length(Deltas)) {
+                FinalMatrix[i,]<-sinArc(Species,0,Deltas[i])
+                }
+        return(ceiling(FinalMatrix*100)) # Use ceiling to ensure integer values
         }
-    return(ceiling(FinalMatrix*100)) # Use ceiling to ensure integer values
-    }
+
+theilEntropy<-function(Abundances) {
+        Richness<-length(Abundances)
+        Top<-Abundances/Richness
+        Bottom<-1/Richness
+        Quotient<-Top/Bottom
+        Exponent<-Quotient^Abundances
+        Solution<-log(Exponent^(1/Richness))
+        return(Solution)
+        }
 
 ########################################## GENERATE DATA SCRIPTS, SQS #######################################
 # Determine how many species you'd like to simulate
@@ -49,7 +59,10 @@ PopulatedMatrix<-populateMatrix(Species,0.1,3,0.1)
 BiodiversitySQS<-apply(PopulatedMatrix,1,velociraptr::subsampleEvenness,0.75,ExcludeDominant=TRUE)
 
 # Calculate pielou's evenness for each sample. You could also look at the deltas as a more direct measure.
-Evenness<-vegan::diversity(PopulatedMatrix)/log(vegan::specnumber(PopulatedMatrix))
+Pielou<-vegan::diversity(PopulatedMatrix)/log(vegan::specnumber(PopulatedMatrix))
+# Calculate the Theil Entropy (evenness) for each sample.
+Theil<-apply(PopulatedMatrix,1,theilEntropy)
 
 # Plot the relationship
-plot(y=BiodiversitySQS,x=Evenness,xlab="pielou's evennes",ylab="standardized biodiversity",pch=16,cex=1.5,las=1)
+plot(y=BiodiversitySQS,x=Pielou,xlab="pielou's evennes",ylab="standardized biodiversity",pch=16,cex=1.5,las=1)
+plot(y=BiodiversitySQS,x=Theil,xlab="pielou's evennes",ylab="standardized biodiversity",pch=16,cex=1.5,las=1)
